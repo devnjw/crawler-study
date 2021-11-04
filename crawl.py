@@ -8,15 +8,22 @@ targets = {
         , "parser": "st11_parser"
     }
 }
- 
+
 request = SeleniumRequest( driver_path='./crawler/drivers/chromedriver' )
- 
-for key in targets.keys():
-    info = targets[key]
- 
+
+def run_target(target):
+    info = targets[target]
+
     url = info['url']
     callback = eval(info["parser"])
- 
+
     data = request.get( url, callback=callback )
- 
+
     pprint( data )
+
+def run():
+    for key in targets.keys():
+        run_target(key)
+
+if __name__ == "__main__":
+   run()
